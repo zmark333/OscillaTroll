@@ -33,12 +33,14 @@ public:
     
     OscData& getOscillator1() { return osc1; }
     OscData& getOscillator2() { return osc2; }
+    OscData& getOscillator3() { return osc3; }
     
 private:
     juce::AudioBuffer<float> synthBuffer;
     
     OscData osc1;
     OscData osc2;
+    OscData osc3;
     AdsrData adsr;
     
     juce::dsp::Gain<float> gain;

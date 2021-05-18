@@ -50,9 +50,9 @@ void AdsrComponent::resized()
     const auto bounds=getLocalBounds().reduced(10);
     const auto padding=10;
     const auto sliderWidth=bounds.getWidth()/4-padding;
-    const auto sliderHeight=bounds.getHeight();
+    const auto sliderHeight=bounds.getHeight()-60;
     const auto sliderStartX=0;
-    const auto sliderStartY=0;
+    const auto sliderStartY=30;
     
     attackSlider.setBounds(sliderStartX, sliderStartY, sliderWidth, sliderHeight);
     decaySlider.setBounds(attackSlider.getRight()+padding, sliderStartY, sliderWidth, sliderHeight);

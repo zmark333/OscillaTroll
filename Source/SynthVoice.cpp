@@ -18,6 +18,7 @@ void SynthVoice::startNote (int midiNoteNumber,float velocity, juce::Synthesiser
 {
     osc1.setWaveFrequency(midiNoteNumber);
     osc2.setWaveFrequency(midiNoteNumber);
+    osc3.setWaveFrequency(midiNoteNumber);
     adsr.noteOn();
 }
 void SynthVoice::stopNote (float velocity, bool allowTailOff)
@@ -45,6 +46,7 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
     
     osc1.prepareToPlay(spec);
     osc2.prepareToPlay(spec);
+    osc3.prepareToPlay(spec);
     adsr.setSampleRate(sampleRate);
     
     gain.prepare(spec);
@@ -71,6 +73,7 @@ void SynthVoice::renderNextBlock (juce::AudioBuffer<float>& outputBuffer, int st
     juce::dsp::AudioBlock<float> audioBlock {synthBuffer};
     osc1.getNewAudioBlock(audioBlock);
     osc2.getNewAudioBlock(audioBlock);
+    osc3.getNewAudioBlock(audioBlock);
     adsr.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
     gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     
