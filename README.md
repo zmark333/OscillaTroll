@@ -3,6 +3,8 @@ the more the better
 
 If you ever felt that you didn't have enough oscillator than here is the solution!
 
+The program have 3 oscillator and in every oscillator the user can change the raltive pitch, the gain, can use fm modulation and can change between three type of waveforms. Moreover the program has an ADSR compontent, which can change the whole synthesisers ADSR datas.
+
 
 This project use Juce open-source cross-platform (juce.com).
 
