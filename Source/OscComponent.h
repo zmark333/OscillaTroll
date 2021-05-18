@@ -17,7 +17,7 @@
 class OscComponent  : public juce::Component
 {
 public:
-    OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId);
+    OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId);
     ~OscComponent() override;
     
     void paint (juce::Graphics&) override;
@@ -43,6 +43,8 @@ private:
     juce::Label fmDepthLabel{"FM Depth", "FM Depth"};
     juce::Label gainLabel{"Gain", "Gain"};
     juce::Label pitchLabel{"Pitch", "Pitch"};
+    
+    juce::String componentName {""};
 
     
     

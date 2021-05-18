@@ -19,6 +19,13 @@ void SynthVoice::startNote (int midiNoteNumber,float velocity, juce::Synthesiser
     osc1.setWaveFrequency(midiNoteNumber);
     osc2.setWaveFrequency(midiNoteNumber);
     osc3.setWaveFrequency(midiNoteNumber);
+    osc4.setWaveFrequency(midiNoteNumber);
+    osc5.setWaveFrequency(midiNoteNumber);
+    osc6.setWaveFrequency(midiNoteNumber);
+    osc7.setWaveFrequency(midiNoteNumber);
+    osc8.setWaveFrequency(midiNoteNumber);
+    osc9.setWaveFrequency(midiNoteNumber);
+    osc10.setWaveFrequency(midiNoteNumber);
     adsr.noteOn();
 }
 void SynthVoice::stopNote (float velocity, bool allowTailOff)
@@ -47,6 +54,13 @@ void SynthVoice::prepareToPlay(double sampleRate, int samplesPerBlock, int outpu
     osc1.prepareToPlay(spec);
     osc2.prepareToPlay(spec);
     osc3.prepareToPlay(spec);
+    osc4.prepareToPlay(spec);
+    osc5.prepareToPlay(spec);
+    osc6.prepareToPlay(spec);
+    osc7.prepareToPlay(spec);
+    osc8.prepareToPlay(spec);
+    osc9.prepareToPlay(spec);
+    osc10.prepareToPlay(spec);
     adsr.setSampleRate(sampleRate);
     
     gain.prepare(spec);
@@ -74,6 +88,13 @@ void SynthVoice::renderNextBlock (juce::AudioBuffer<float>& outputBuffer, int st
     osc1.getNewAudioBlock(audioBlock);
     osc2.getNewAudioBlock(audioBlock);
     osc3.getNewAudioBlock(audioBlock);
+    osc4.getNewAudioBlock(audioBlock);
+    osc5.getNewAudioBlock(audioBlock);
+    osc6.getNewAudioBlock(audioBlock);
+    osc7.getNewAudioBlock(audioBlock);
+    osc8.getNewAudioBlock(audioBlock);
+    osc9.getNewAudioBlock(audioBlock);
+    osc10.getNewAudioBlock(audioBlock);
     adsr.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
     gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     
