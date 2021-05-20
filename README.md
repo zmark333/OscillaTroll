@@ -1,13 +1,13 @@
 # OscillaTroll
 the more the better
 
-If you ever felt that you didn't have enough oscillator than here is the solution!
+If you ever felt that you didn't have enough oscillator then here is the solution!
 
-The program have 10 oscillator and in every oscillator the user can change the raltive pitch, the gain, can use fm modulation and can change between three type of waveforms. Moreover the program has an ADSR compontent, which can change the whole synthesisers ADSR datas.
+The program has 10 oscillators and in every oscillator, the user can change the relative pitch, the gain, can use fm modulation, and can change between three types of waveforms. Moreover, the program has an ADSR component, which can change the whole synthesizer's ADSR data.
 
-After the downloading you have to run the code and after a restart your DAW's plugin manager hopefuly will find. 
+After the downloading, you have to run the code and after a restart, your DAW's plugin manager hopefully will find it. 
 
-This project use Juce open-source cross-platform (juce.com).
+This project uses Juce open-source cross-platform (juce.com).
 
 
 
