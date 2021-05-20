@@ -11,4 +11,5 @@ This project use Juce open-source cross-platform (juce.com).
 
 
 
-![Képernyőfotó 2021-05-18 - 22 04 09](https://user-images.githubusercontent.com/69004640/118716432-19bc3e80-b825-11eb-99c0-051bc5419567.png)
+![Képernyőfotó 2021-05-20 - 23 37 12](https://user-images.githubusercontent.com/69004640/119052981-b3baed00-b9c5-11eb-8860-09d9c7d50407.png)
+
