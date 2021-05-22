@@ -11,7 +11,7 @@
 #include "OscComponent.h"
 #include <JuceHeader.h>
 
-OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId)
+OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId, juce::String lfoFreqId, juce::String lfoDepthId)
 {
     componentName=name;
     
@@ -37,6 +37,24 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
     fmDepthLabel.setFont(15.0f);
     fmDepthLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(fmDepthLabel);
+    
+    lfoFreqSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    lfoFreqSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    addAndMakeVisible (lfoFreqSlider);
+    lfoFreqAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, lfoFreqId, lfoFreqSlider);
+    lfoFreqLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
+    lfoFreqLabel.setFont(15.0f);
+    lfoFreqLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(lfoFreqLabel);
+    
+    lfoDepthSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    lfoDepthSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    addAndMakeVisible (lfoDepthSlider);
+    lfoDepthAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, lfoDepthId, lfoDepthSlider);
+    lfoDepthLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
+    lfoDepthLabel.setFont(15.0f);
+    lfoDepthLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(lfoDepthLabel);
     
     gainSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     gainSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
@@ -67,18 +85,23 @@ OscComponent::~OscComponent()
 
 void OscComponent::paint (juce::Graphics& g)
 {
-    auto bounds=getLocalBounds().reduced(40);
+    auto bounds=getLocalBounds();
     auto labelSpace=bounds.removeFromTop(25.0f);
     
     g.fillAll(juce::Colours::black);
-    g.drawText(componentName, labelSpace.withX(20), juce::Justification::right);
+    g.setColour(juce::Colours::white);
     g.drawRoundedRectangle(bounds.toFloat(), 5.0f, 2.0f);
+    
+    g.setColour (juce::Colours::white);
+    g.setFont (15.0f);
+    g.setFont (g.getCurrentFont().boldened());
+    g.drawText(componentName, labelSpace.withX(0), juce::Justification::right);
 }
 
 void OscComponent::resized()
 {
-    const auto sliderWidth=100;
-    const auto sliderHeight=80;
+    const auto sliderWidth=70;
+    const auto sliderHeight=70;
     const auto labelYOff=20;
     const auto labelHeight=20;
     const auto sliderPosY=50;
@@ -88,7 +111,11 @@ void OscComponent::resized()
     fmFreqLabel.setBounds(fmFreqSlider.getX(), fmFreqSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
     fmDepthSlider.setBounds(fmFreqSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     fmDepthLabel.setBounds(fmDepthSlider.getX(), fmDepthSlider.getY()-labelYOff, fmDepthSlider.getWidth(), labelHeight);
-    gainSlider.setBounds(fmDepthSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+    lfoFreqSlider.setBounds(fmDepthSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+    lfoFreqLabel.setBounds(lfoFreqSlider.getX(), lfoFreqSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
+    lfoDepthSlider.setBounds(lfoFreqSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+    lfoDepthLabel.setBounds(lfoDepthSlider.getX(), lfoDepthSlider.getY()-labelYOff, fmDepthSlider.getWidth(), labelHeight);
+    gainSlider.setBounds(lfoDepthSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     gainLabel.setBounds(gainSlider.getX(), gainSlider.getY()-labelYOff, gainSlider.getWidth(), labelHeight);
     pitchSlider.setBounds(gainSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     pitchLabel.setBounds(pitchSlider.getX(), pitchSlider.getY()-labelYOff, pitchSlider.getWidth(), labelHeight);

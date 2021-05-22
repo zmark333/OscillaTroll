@@ -17,7 +17,7 @@
 class OscComponent  : public juce::Component
 {
 public:
-    OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId);
+    OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId, juce::String lfoFreqId, juce::String lfoDepthId);
     ~OscComponent() override;
     
     void paint (juce::Graphics&) override;
@@ -29,6 +29,8 @@ private:
     
     juce::Slider fmFreqSlider;
     juce::Slider fmDepthSlider;
+    juce::Slider lfoFreqSlider;
+    juce::Slider lfoDepthSlider;
     juce::Slider gainSlider;
     juce::Slider pitchSlider;
     
@@ -36,11 +38,15 @@ private:
     
     std::unique_ptr<Attachment> fmFreqAttachment;
     std::unique_ptr<Attachment> fmDepthAttachment;
+    std::unique_ptr<Attachment> lfoFreqAttachment;
+    std::unique_ptr<Attachment> lfoDepthAttachment;
     std::unique_ptr<Attachment> gainAttachment;
     std::unique_ptr<Attachment> pitchAttachment;
     
     juce::Label fmFreqLabel{"FM Freq", "FM Freq"};
     juce::Label fmDepthLabel{"FM Depth", "FM Depth"};
+    juce::Label lfoFreqLabel{"LFO Freq", "LFO Freq"};
+    juce::Label lfoDepthLabel{"LFO Depth", "LFO Depth"};
     juce::Label gainLabel{"Gain", "Gain"};
     juce::Label pitchLabel{"Pitch", "Pitch"};
     

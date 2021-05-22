@@ -31,21 +31,32 @@ public:
     void updateAdsr(const float attack, const float decay, const float sustain, const float release);
     
     
-    OscData& getOscillator1() { return osc1; }
-    OscData& getOscillator2() { return osc2; }
-    OscData& getOscillator3() { return osc3; }
-    OscData& getOscillator4() { return osc4; }
-    OscData& getOscillator5() { return osc5; }
-    OscData& getOscillator6() { return osc6; }
-    OscData& getOscillator7() { return osc7; }
-    OscData& getOscillator8() { return osc8; }
-    OscData& getOscillator9() { return osc9; }
-    OscData& getOscillator10() { return osc10; }
+    std::array<OscData, 2>& getOscillator1() { return osc1; }
+    std::array<OscData, 2>& getOscillator2() { return osc2; }
+    std::array<OscData, 2>& getOscillator3() { return osc3; }
+    std::array<OscData, 2>& getOscillator4() { return osc4; }
+    std::array<OscData, 2>& getOscillator5() { return osc5; }
+    std::array<OscData, 2>& getOscillator6() { return osc6; }
+    std::array<OscData, 2>& getOscillator7() { return osc7; }
+    std::array<OscData, 2>& getOscillator8() { return osc8; }
+    std::array<OscData, 2>& getOscillator9() { return osc9; }
+    std::array<OscData, 2>& getOscillator10() { return osc10; }
     
 private:
     juce::AudioBuffer<float> synthBuffer;
     
-    OscData osc1;
+    
+    std::array<OscData, 2> osc1;
+    std::array<OscData, 2> osc2;
+    std::array<OscData, 2> osc3;
+    std::array<OscData, 2> osc4;
+    std::array<OscData, 2> osc5;
+    std::array<OscData, 2> osc6;
+    std::array<OscData, 2> osc7;
+    std::array<OscData, 2> osc8;
+    std::array<OscData, 2> osc9;
+    std::array<OscData, 2> osc10;
+    /*OscData osc1;
     OscData osc2;
     OscData osc3;
     OscData osc4;
@@ -55,6 +66,7 @@ private:
     OscData osc8;
     OscData osc9;
     OscData osc10;
+     */
     AdsrData adsr;
     
     juce::dsp::Gain<float> gain;

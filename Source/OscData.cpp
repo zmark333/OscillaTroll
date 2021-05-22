@@ -13,8 +13,11 @@
 void OscData:: prepareToPlay(juce::dsp::ProcessSpec& spec)
 {
     fmOsc.prepare(spec);
+    lfoOsc.prepare(spec);
     prepare(spec);
     gain.prepare(spec);
+    sampleRateUse=spec.sampleRate;
+    
 }
 
 void OscData::setWaveType(const int choice)
@@ -55,6 +58,7 @@ void OscData::getNewAudioBlock(juce::dsp::AudioBlock<float>& block)
         for(int s=0; s<block.getNumSamples(); s++)
         {
             fmMod=fmOsc.processSample(block.getSample(ch, s))*fmDepth;
+            //lfoMod=lfoOsc.processSample(block.getSample(ch, s))*lfoDepth;
         }
     }
     
@@ -66,14 +70,21 @@ void OscData::setFmParams(const float depth, const float freq)
 {
     fmOsc.setFrequency(freq);
     fmDepth=depth;
-    auto currentFreq=juce::MidiMessage::getMidiNoteInHertz(lastMidiNote)+fmMod;
+    //auto currentFreq=juce::MidiMessage::getMidiNoteInHertz(lastMidiNote)+fmMod;
     //setFrequency(currentFreq>=0 ? currentFreq: currentFreq* -1.0f);
     setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod);
 }
 
+void OscData::setLfoParams(const float depth, const float freq)
+{
+    lfoOsc.setFrequency(freq*48);
+    lfoDepth=depth;
+}
+
 void OscData::setGain(const float levelInDecibels)
 {
-    gain.setGainDecibels(levelInDecibels);
+    //juce::dsp::decibelsToGain<float>(levelInDecibels);
+    gain.setGainDecibels(levelInDecibels+lfoMod);
 }
 
 void OscData::setPitch(const int pitch)
@@ -82,3 +93,18 @@ void OscData::setPitch(const int pitch)
     setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod);
 }
 
+float OscData::processNextSample (float input)
+{
+    //input=0;
+    fmMod = fmOsc.processSample (input) * fmDepth;
+    if (counter==48)
+    {
+        lfoMod = lfoOsc.processSample (input) * lfoDepth;
+        counter=0;
+    }
+    counter++;
+    lastProcessSample=gain.processSample (processSample (input));
+    //std::cout<<input<<std::endl;
+    //std::cout<<gain.processSample (processSample (input))<<std::endl;
+    return gain.processSample (processSample (input));
+}
