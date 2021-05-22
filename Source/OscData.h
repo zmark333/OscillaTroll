@@ -22,6 +22,7 @@ public:
     void setLfoParams (const float depth, const float freq);
     void setGain(const float levelInDecibels);
     void setPitch(const int pitch);
+    void setDetuner(const float detune);
     float processNextSample (float input);
     
     
@@ -33,6 +34,7 @@ private:
     float fmDepth {0.0f};
     float lfoMod {0.0f};
     float lfoDepth {10.0f};
+    float detuner {0.0f};
     int lastMidiNote {0};
     int counter {0};
     double sampleRateUse;

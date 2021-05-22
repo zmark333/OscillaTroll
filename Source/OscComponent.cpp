@@ -11,7 +11,7 @@
 #include "OscComponent.h"
 #include <JuceHeader.h>
 
-OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId, juce::String lfoFreqId, juce::String lfoDepthId)
+OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId, juce::String lfoFreqId, juce::String lfoDepthId, juce::String detunerId)
 {
     componentName=name;
     
@@ -73,6 +73,16 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
     pitchLabel.setFont(15.0f);
     pitchLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(pitchLabel);
+    
+    detunerSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    detunerSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    addAndMakeVisible (detunerSlider);
+    detunerAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, detunerId, detunerSlider);
+    detunerLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
+    detunerLabel.setFont(15.0f);
+    detunerLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(detunerLabel);
+    
     //setSliderWithLabel(fmFreqSlider, fmFreqLabel, apvts, fmFreqId, fmFreqAttachment);
     //setSliderWithLabel(fmDepthSlider, fmDepthLabel, apvts, fmDepthId, fmDepthAttachment);
     
@@ -119,6 +129,8 @@ void OscComponent::resized()
     gainLabel.setBounds(gainSlider.getX(), gainSlider.getY()-labelYOff, gainSlider.getWidth(), labelHeight);
     pitchSlider.setBounds(gainSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     pitchLabel.setBounds(pitchSlider.getX(), pitchSlider.getY()-labelYOff, pitchSlider.getWidth(), labelHeight);
+    detunerSlider.setBounds(pitchSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+    detunerLabel.setBounds(detunerSlider.getX(), detunerSlider.getY()-labelYOff, detunerSlider.getWidth(), labelHeight);
 }
 
 using Attachment= juce::AudioProcessorValueTreeState::SliderAttachment;

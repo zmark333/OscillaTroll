@@ -47,7 +47,7 @@ void OscData::setWaveType(const int choice)
 
 void OscData::setWaveFrequency(const int midiNoteNumber)
 {
-    setFrequency(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber+lastPitch)+fmMod);
+    setFrequency(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber+lastPitch)+fmMod+detuner);
     lastMidiNote=midiNoteNumber;
 }
 
@@ -72,7 +72,7 @@ void OscData::setFmParams(const float depth, const float freq)
     fmDepth=depth;
     //auto currentFreq=juce::MidiMessage::getMidiNoteInHertz(lastMidiNote)+fmMod;
     //setFrequency(currentFreq>=0 ? currentFreq: currentFreq* -1.0f);
-    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod);
+    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
 }
 
 void OscData::setLfoParams(const float depth, const float freq)
@@ -90,7 +90,13 @@ void OscData::setGain(const float levelInDecibels)
 void OscData::setPitch(const int pitch)
 {
     lastPitch=pitch;
-    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod);
+    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+}
+
+void OscData::setDetuner(const float detune)
+{
+    detuner=detune;
+    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
 }
 
 float OscData::processNextSample (float input)
