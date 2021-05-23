@@ -15,6 +15,19 @@
 //==============================================================================
 /*
  */
+
+class ADSRSliderLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    ADSRSliderLookAndFeel()
+    {
+        setColour(juce::Slider::backgroundColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::trackColourId, juce::Colours::royalblue);
+        setColour(juce::Slider::thumbColourId, juce::Colours::navy);
+    }
+};
+
+
 class AdsrComponent  : public juce::Component
 {
 public:
@@ -31,7 +44,12 @@ private:
     juce::Slider decaySlider;
     juce::Slider sustainSlider;
     juce::Slider releaseSlider;
-    juce::ComboBox oscSelector;
+    //juce::ComboBox oscSelector;
+    
+    juce::Label attackLabel {"A", "A"};
+    juce::Label decayLabel {"D", "D"};
+    juce::Label sustainLabel {"S", "S"};
+    juce::Label releaseLabel {"R", "R"};
     
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     
@@ -41,6 +59,8 @@ private:
     std::unique_ptr<SliderAttachment> releaseAttachment;
     
     juce::String componentName {""};
+    
+    ADSRSliderLookAndFeel sliderLookAndFeel;
     
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AdsrComponent)

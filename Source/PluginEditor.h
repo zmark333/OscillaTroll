@@ -40,6 +40,7 @@ private:
     OscComponent osc9;
     OscComponent osc10;
     AdsrComponent adsr;
+    
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillaTroll02AudioProcessorEditor)
 };

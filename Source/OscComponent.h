@@ -14,6 +14,40 @@
 //==============================================================================
 /*
  */
+
+class ComboBoxLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    ComboBoxLookAndFeel()
+    {
+        setColour(juce::ComboBox::backgroundColourId, juce::Colours::steelblue);
+        setColour(juce::ComboBox::arrowColourId, juce::Colours::steelblue);
+    }
+};
+
+class SliderLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    SliderLookAndFeel()
+    {
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::royalblue);
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::thumbColourId, juce::Colours::navy);
+    }
+};
+
+class OtherSliderLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    OtherSliderLookAndFeel()
+    {
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::thumbColourId, juce::Colours::navy);
+    }
+};
+
+
 class OscComponent  : public juce::Component
 {
 public:
@@ -54,10 +88,13 @@ private:
     juce::Label detunerLabel{"Detune", "Detune"};
     
     juce::String componentName {""};
-
     
-    
-    void setSliderWithLabel(juce::Slider& slider, juce::Label& label, juce::AudioProcessorValueTreeState& apvts, juce::String paramId, std::unique_ptr<Attachment>& attachment);
+    ComboBoxLookAndFeel comboBoxLookAndFeel;
+    SliderLookAndFeel sliderLookAndFeel;
+    OtherSliderLookAndFeel otherSliderLookAndFeel;
+  
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscComponent)
 };
+
+

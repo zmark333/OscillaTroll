@@ -24,7 +24,10 @@ OscillaTroll02AudioProcessorEditor::OscillaTroll02AudioProcessorEditor (OscillaT
         osc10 (audioProcessor.apvts, "Oscillator 10", "OSC10WAVETYPE", "OSC10FMFREQ", "OSC10FMDEPTH", "OSC10GAIN", "OSC10PITCH", "OSC10LFOFREQ", "OSC10LFODEPTH", "OSC10DETUNE"),
         adsr ("Amp Envelope", audioProcessor.apvts, "ATTACK", "DECAY", "SUSTAIN", "RELEASE")
 {
-    setSize (1500, 700);
+    setResizable(true, true);
+    setSize (900, 500);
+    setResizeLimits(600, 450, 1400, 1200);
+
     addAndMakeVisible(osc1);
     addAndMakeVisible(osc2);
     addAndMakeVisible(osc3);
@@ -46,28 +49,35 @@ OscillaTroll02AudioProcessorEditor::~OscillaTroll02AudioProcessorEditor()
 void OscillaTroll02AudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    //g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll(juce::Colours::steelblue);
 
 }
 
 void OscillaTroll02AudioProcessorEditor::resized()
 {
+    juce::Rectangle<int> bounds = getLocalBounds();
     const auto paddingX=5;
-    const auto paddingY=0;
-    const auto paddingYplus=200;
-    const auto width=490;
-    const auto height=140;
+    const auto paddingY=5;
+    auto width=490;
+    auto height=140;
     
-    osc1.setBounds(paddingX, paddingY, width, height);
-    osc2.setBounds( paddingX, 140, width, height);
-    osc3.setBounds( paddingX, 280, width, height);
-    osc4.setBounds( paddingX, 420, width, height);
-    osc5.setBounds( paddingX, 560, width, height);
-    osc6.setBounds(osc1.getRight(), paddingY, width, height);
-    osc7.setBounds( osc1.getRight(), 140, width, height);
-    osc8.setBounds( osc1.getRight(), 280, width, height);
-    osc9.setBounds( osc1.getRight(), 420, width, height);
-    osc10.setBounds( osc1.getRight(), 560, width, height);
-    adsr.setBounds(osc6.getRight(),paddingY,width, 300);
+    width=(bounds.getWidth()-4*paddingX)/2.5;
+    height=(bounds.getHeight()-5*paddingY)/5;
     
+    
+    osc1.setBounds(paddingX, 0, width, height);
+    osc2.setBounds( paddingX, height+paddingY, width, height);
+    osc3.setBounds( paddingX, 2*(height+paddingY), width, height);
+    osc4.setBounds( paddingX, 3*(height+paddingY), width, height);
+    osc5.setBounds( paddingX, 4*(height+paddingY), width, height);
+    osc6.setBounds(osc1.getRight()+paddingX, 0, width, height);
+    osc7.setBounds( osc1.getRight()+paddingX, (height+paddingY), width, height);
+    osc8.setBounds( osc1.getRight()+paddingX, 2*(height+paddingY), width, height);
+    osc9.setBounds( osc1.getRight()+paddingX, 3*(height+paddingY), width, height);
+    osc10.setBounds( osc1.getRight()+paddingX, 4*(height+paddingY), width, height);
+    adsr.setBounds(osc6.getRight()+paddingX,paddingY,width/2, 2*height-paddingY);
+    
+    
+
 }

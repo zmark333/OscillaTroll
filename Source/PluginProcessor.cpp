@@ -380,16 +380,16 @@ juce::AudioProcessorValueTreeState::ParameterLayout OscillaTroll02AudioProcessor
     params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC10WAVETYPE", "Osc 10 Wave Type", juce::StringArray {"Sine", "Saw", "Square"}, 0));
     
     //Gain
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC1GAIN", "Oscillator 1 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC2GAIN", "Oscillator 2 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC3GAIN", "Oscillator 3 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC4GAIN", "Oscillator 4 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC5GAIN", "Oscillator 5 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC6GAIN", "Oscillator 6 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC7GAIN", "Oscillator 7 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC8GAIN", "Oscillator 8 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC9GAIN", "Oscillator 9 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC10GAIN", "Oscillator 10 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -2.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC1GAIN", "Oscillator 1 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC2GAIN", "Oscillator 2 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC3GAIN", "Oscillator 3 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC4GAIN", "Oscillator 4 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC5GAIN", "Oscillator 5 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC6GAIN", "Oscillator 6 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC7GAIN", "Oscillator 7 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC8GAIN", "Oscillator 8 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC9GAIN", "Oscillator 9 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC10GAIN", "Oscillator 10 Gain", juce::NormalisableRange<float> { -40.0f, 0.2f, 0.1f }, -40.0f, "dB"));
     
     //Pitch
     params.push_back(std::make_unique<juce::AudioParameterInt>("OSC1PITCH", "Oscillator 1 Pitch",  -48, 48, 0 ));

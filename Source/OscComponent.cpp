@@ -15,71 +15,87 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
 {
     componentName=name;
     
+    auto bounds=getLocalBounds();
+    float font=bounds.getHeight()/5;
+    int vmiWeight=50;
+    int vmiHeight=20;
+    font=14.0f;
+    
+    //setTransform(const AffineTransform &transform);
+    
     juce::StringArray choices {"Sine", "Saw", "Square"};
     oscWaveSelector.addItemList(choices, 1);
+    oscWaveSelector.setLookAndFeel(&comboBoxLookAndFeel);
     addAndMakeVisible(oscWaveSelector);
     oscWaveSelectorAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, waveSelectorID, oscWaveSelector);
     
     fmFreqSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    fmFreqSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    fmFreqSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    fmFreqSlider.setLookAndFeel(&sliderLookAndFeel);
     addAndMakeVisible (fmFreqSlider);
     fmFreqAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, fmFreqId, fmFreqSlider);
     fmFreqLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    fmFreqLabel.setFont(15.0f);
+    fmFreqLabel.setFont(font);
     fmFreqLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(fmFreqLabel);
     
     fmDepthSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    fmDepthSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    fmDepthSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    fmDepthSlider.setLookAndFeel(&sliderLookAndFeel);
     addAndMakeVisible (fmDepthSlider);
     fmDepthAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, fmDepthId, fmDepthSlider);
     fmDepthLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    fmDepthLabel.setFont(15.0f);
+    fmDepthLabel.setFont(font);
     fmDepthLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(fmDepthLabel);
     
     lfoFreqSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    lfoFreqSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    lfoFreqSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    lfoFreqSlider.setLookAndFeel(&sliderLookAndFeel);
     addAndMakeVisible (lfoFreqSlider);
     lfoFreqAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, lfoFreqId, lfoFreqSlider);
     lfoFreqLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    lfoFreqLabel.setFont(15.0f);
+    lfoFreqLabel.setFont(font);
     lfoFreqLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(lfoFreqLabel);
     
     lfoDepthSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    lfoDepthSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    lfoDepthSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    lfoDepthSlider.setLookAndFeel(&sliderLookAndFeel);
     addAndMakeVisible (lfoDepthSlider);
     lfoDepthAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, lfoDepthId, lfoDepthSlider);
     lfoDepthLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    lfoDepthLabel.setFont(15.0f);
+    lfoDepthLabel.setFont(font);
     lfoDepthLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(lfoDepthLabel);
     
     gainSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    gainSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    gainSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    gainSlider.setLookAndFeel(&sliderLookAndFeel);
     addAndMakeVisible (gainSlider);
     gainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, gainId, gainSlider);
     gainLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    gainLabel.setFont(15.0f);
+    gainLabel.setFont(font);
     gainLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(gainLabel);
     
     pitchSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    pitchSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    pitchSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    pitchSlider.setLookAndFeel(&otherSliderLookAndFeel);
     addAndMakeVisible (pitchSlider);
     pitchAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, pitchId, pitchSlider);
     pitchLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    pitchLabel.setFont(15.0f);
+    pitchLabel.setFont(font);
     pitchLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(pitchLabel);
     
     detunerSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    detunerSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 25);
+    detunerSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    detunerSlider.setLookAndFeel(&otherSliderLookAndFeel);
     addAndMakeVisible (detunerSlider);
     detunerAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, detunerId, detunerSlider);
     detunerLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    detunerLabel.setFont(15.0f);
+    detunerLabel.setFont(font);
     detunerLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(detunerLabel);
     
@@ -91,32 +107,48 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
 
 OscComponent::~OscComponent()
 {
+    oscWaveSelector.setLookAndFeel(nullptr);
+    fmFreqSlider.setLookAndFeel(nullptr);
+    fmDepthSlider.setLookAndFeel(nullptr);
+    lfoFreqSlider.setLookAndFeel(nullptr);
+    lfoDepthSlider.setLookAndFeel(nullptr);
+    gainSlider.setLookAndFeel(nullptr);
+    pitchSlider.setLookAndFeel(nullptr);
+    detunerSlider.setLookAndFeel(nullptr);
 }
 
 void OscComponent::paint (juce::Graphics& g)
 {
     auto bounds=getLocalBounds();
     auto labelSpace=bounds.removeFromTop(25.0f);
+    float font=bounds.getHeight()/5;
     
-    g.fillAll(juce::Colours::black);
+    g.fillAll(juce::Colours::steelblue);
     g.setColour(juce::Colours::white);
     g.drawRoundedRectangle(bounds.toFloat(), 5.0f, 2.0f);
     
     g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
+    g.setFont (font);
     g.setFont (g.getCurrentFont().boldened());
     g.drawText(componentName, labelSpace.withX(0), juce::Justification::right);
 }
 
 void OscComponent::resized()
 {
-    const auto sliderWidth=70;
-    const auto sliderHeight=70;
-    const auto labelYOff=20;
-    const auto labelHeight=20;
-    const auto sliderPosY=50;
+    auto sliderWidth=70;
+    auto sliderHeight=70;
+    auto labelYOff=20;
+    auto labelHeight=20;
+    auto sliderPosY=50;
     
-    oscWaveSelector.setBounds(0, 0, 90, 20);
+    juce::Rectangle<int> bounds = getLocalBounds();
+    sliderWidth=bounds.getWidth()/7;
+    sliderHeight=bounds.getHeight()/2+10;
+    labelHeight=sliderHeight/3;
+    labelYOff=sliderHeight/4;
+    sliderPosY=labelHeight*2;
+    
+    oscWaveSelector.setBounds(0, 0, sliderWidth*2.5, labelHeight);
     fmFreqSlider.setBounds(0, sliderPosY, sliderWidth, sliderHeight);
     fmFreqLabel.setBounds(fmFreqSlider.getX(), fmFreqSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
     fmDepthSlider.setBounds(fmFreqSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
@@ -131,19 +163,8 @@ void OscComponent::resized()
     pitchLabel.setBounds(pitchSlider.getX(), pitchSlider.getY()-labelYOff, pitchSlider.getWidth(), labelHeight);
     detunerSlider.setBounds(pitchSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     detunerLabel.setBounds(detunerSlider.getX(), detunerSlider.getY()-labelYOff, detunerSlider.getWidth(), labelHeight);
+    
+    
+    
 }
 
-using Attachment= juce::AudioProcessorValueTreeState::SliderAttachment;
-void OscComponent::setSliderWithLabel(juce::Slider& slider, juce::Label& label, juce::AudioProcessorValueTreeState& apvts, juce::String paramId, std::unique_ptr<Attachment>& attachment)
-{
-    slider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
-    addAndMakeVisible(slider);
-    
-    attachment=std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment> (apvts, paramId, slider);
-    
-    label.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
-    label.setFont(15.0f);
-    label.setJustificationType(juce::Justification::centred);
-    addAndMakeVisible(label);
-}
