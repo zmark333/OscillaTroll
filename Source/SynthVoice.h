@@ -29,6 +29,7 @@ public:
     void prepareToPlay (double sampleRate, int samplesPerBlock, int outputChannels);
     void renderNextBlock (juce::AudioBuffer<float>& outputBuffer, int startSample, int numSamples) override;
     void updateAdsr(const float attack, const float decay, const float sustain, const float release);
+    void setMasterVolume(const float vol) {masterVolume=vol;}
     
     
     std::array<OscData, 2>& getOscillator1() { return osc1; }
@@ -45,6 +46,7 @@ public:
 private:
     juce::AudioBuffer<float> synthBuffer;
     
+    float masterVolume;
     
     std::array<OscData, 2> osc1;
     std::array<OscData, 2> osc2;

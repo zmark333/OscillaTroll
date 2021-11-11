@@ -156,6 +156,10 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
             auto& sustain=*apvts.getRawParameterValue("SUSTAIN");
             auto& release=*apvts.getRawParameterValue("RELEASE");
             
+            auto& masterVolume=*apvts.getRawParameterValue("MASTERGAIN");
+            
+            auto& glide=*apvts.getRawParameterValue("GLIDE");
+            
             auto& oscWaveChoice1=*apvts.getRawParameterValue("OSC1WAVETYPE");
             auto& fmFrequ1=*apvts.getRawParameterValue("OSC1FMFREQ");
             auto& fmDepth1=*apvts.getRawParameterValue("OSC1FMDEPTH");
@@ -254,6 +258,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator1()[i].setGain(levelInDecibels1);
                 voice->getOscillator1()[i].setPitch(oscPitch1);
                 voice->getOscillator1()[i].setDetuner(detune1);
+                voice->getOscillator1()[i].setGlide(glide);
                 
                 voice->getOscillator2()[i].setWaveType(oscWaveChoice2);
                 voice->getOscillator2()[i].setFmParams(fmDepth2, fmFrequ2);
@@ -261,6 +266,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator2()[i].setGain(levelInDecibels2);
                 voice->getOscillator2()[i].setPitch(oscPitch2);
                 voice->getOscillator2()[i].setDetuner(detune2);
+                voice->getOscillator2()[i].setGlide(glide);
                 
                 voice->getOscillator3()[i].setWaveType(oscWaveChoice3);
                 voice->getOscillator3()[i].setFmParams(fmDepth3, fmFrequ3);
@@ -268,6 +274,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator3()[i].setGain(levelInDecibels3);
                 voice->getOscillator3()[i].setPitch(oscPitch3);
                 voice->getOscillator3()[i].setDetuner(detune3);
+                voice->getOscillator3()[i].setGlide(glide);
                 
                 voice->getOscillator4()[i].setWaveType(oscWaveChoice4);
                 voice->getOscillator4()[i].setFmParams(fmDepth4, fmFrequ4);
@@ -275,6 +282,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator4()[i].setGain(levelInDecibels4);
                 voice->getOscillator4()[i].setPitch(oscPitch4);
                 voice->getOscillator4()[i].setDetuner(detune4);
+                voice->getOscillator4()[i].setGlide(glide);
                 
                 voice->getOscillator5()[i].setWaveType(oscWaveChoice5);
                 voice->getOscillator5()[i].setFmParams(fmDepth5, fmFrequ5);
@@ -282,6 +290,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator5()[i].setGain(levelInDecibels5);
                 voice->getOscillator5()[i].setPitch(oscPitch5);
                 voice->getOscillator5()[i].setDetuner(detune5);
+                voice->getOscillator5()[i].setGlide(glide);
                 
                 voice->getOscillator6()[i].setWaveType(oscWaveChoice6);
                 voice->getOscillator6()[i].setFmParams(fmDepth6, fmFrequ6);
@@ -289,6 +298,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator6()[i].setGain(levelInDecibels6);
                 voice->getOscillator6()[i].setPitch(oscPitch6);
                 voice->getOscillator6()[i].setDetuner(detune6);
+                voice->getOscillator6()[i].setGlide(glide);
                 
                 voice->getOscillator7()[i].setWaveType(oscWaveChoice7);
                 voice->getOscillator7()[i].setFmParams(fmDepth7, fmFrequ7);
@@ -296,6 +306,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator7()[i].setGain(levelInDecibels7);
                 voice->getOscillator7()[i].setPitch(oscPitch7);
                 voice->getOscillator7()[i].setDetuner(detune7);
+                voice->getOscillator7()[i].setGlide(glide);
                 
                 voice->getOscillator8()[i].setWaveType(oscWaveChoice8);
                 voice->getOscillator8()[i].setFmParams(fmDepth8, fmFrequ8);
@@ -303,6 +314,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator8()[i].setGain(levelInDecibels8);
                 voice->getOscillator8()[i].setPitch(oscPitch8);
                 voice->getOscillator8()[i].setDetuner(detune8);
+                voice->getOscillator8()[i].setGlide(glide);
                 
                 voice->getOscillator9()[i].setWaveType(oscWaveChoice9);
                 voice->getOscillator9()[i].setFmParams(fmDepth9, fmFrequ9);
@@ -310,6 +322,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator9()[i].setGain(levelInDecibels9);
                 voice->getOscillator9()[i].setPitch(oscPitch9);
                 voice->getOscillator9()[i].setDetuner(detune9);
+                voice->getOscillator9()[i].setGlide(glide);
                 
                 voice->getOscillator10()[i].setWaveType(oscWaveChoice10);
                 voice->getOscillator10()[i].setFmParams(fmDepth10, fmFrequ10);
@@ -317,9 +330,11 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 voice->getOscillator10()[i].setGain(levelInDecibels10);
                 voice->getOscillator10()[i].setPitch(oscPitch10);
                 voice->getOscillator10()[i].setDetuner(detune10);
+                voice->getOscillator10()[i].setGlide(glide);
             }
             
             voice->updateAdsr(attack.load(), decay.load(), sustain.load(), release.load());
+            voice->setMasterVolume(masterVolume);
         }
     }
     
@@ -345,15 +360,21 @@ juce::AudioProcessorEditor* OscillaTroll02AudioProcessor::createEditor()
 //==============================================================================
 void OscillaTroll02AudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    std::unique_ptr<juce::XmlElement> xml(apvts.state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void OscillaTroll02AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    std::unique_ptr<juce::XmlElement> theParams (getXmlFromBinary(data, sizeInBytes));
+    
+    if (theParams != nullptr)
+    {
+        if (theParams -> hasTagName(apvts.state.getType()))
+        {
+            apvts.state=juce::ValueTree::fromXml(*theParams);
+        }
+    }
 }
 
 //==============================================================================
@@ -380,16 +401,16 @@ juce::AudioProcessorValueTreeState::ParameterLayout OscillaTroll02AudioProcessor
     params.push_back(std::make_unique<juce::AudioParameterChoice>("OSC10WAVETYPE", "Osc 10 Wave Type", juce::StringArray {"Sine", "Saw", "Square"}, 0));
     
     //Gain
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC1GAIN", "Oscillator 1 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC2GAIN", "Oscillator 2 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC3GAIN", "Oscillator 3 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC4GAIN", "Oscillator 4 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC5GAIN", "Oscillator 5 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC6GAIN", "Oscillator 6 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC7GAIN", "Oscillator 7 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC8GAIN", "Oscillator 8 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC9GAIN", "Oscillator 9 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
-    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC10GAIN", "Oscillator 10 Gain", juce::NormalisableRange<float> { -100.0f, 0.2f, 0.1f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC1GAIN", "Oscillator 1 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC2GAIN", "Oscillator 2 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC3GAIN", "Oscillator 3 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC4GAIN", "Oscillator 4 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC5GAIN", "Oscillator 5 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC6GAIN", "Oscillator 6 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC7GAIN", "Oscillator 7 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC8GAIN", "Oscillator 8 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC9GAIN", "Oscillator 9 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
+    params.push_back (std::make_unique<juce::AudioParameterFloat>("OSC10GAIN", "Oscillator 10 Gain", juce::NormalisableRange<float> { -100.0f, 1.0f, 0.1f, 3.0f }, -100.0f, "dB"));
     
     //Pitch
     params.push_back(std::make_unique<juce::AudioParameterInt>("OSC1PITCH", "Oscillator 1 Pitch",  -48, 48, 0 ));
@@ -427,25 +448,25 @@ juce::AudioProcessorValueTreeState::ParameterLayout OscillaTroll02AudioProcessor
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10FMDEPTH","Osc 10 FM Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f, 0.3f},0.0f));
     
     //LFO
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1LFOFREQ","Osc 1 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1LFOFREQ","Osc 1 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1LFODEPTH","Osc 1 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC2LFOFREQ","Osc 2 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC2LFOFREQ","Osc 2 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC2LFODEPTH","Osc 2 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC3LFOFREQ","Osc 3 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC3LFOFREQ","Osc 3 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC3LFODEPTH","Osc 3 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC4LFOFREQ","Osc 4 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC4LFOFREQ","Osc 4 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC4LFODEPTH","Osc 4 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC5LFOFREQ","Osc 5 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC5LFOFREQ","Osc 5 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC5LFODEPTH","Osc 5 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC6LFOFREQ","Osc 6 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC6LFOFREQ","Osc 6 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC6LFODEPTH","Osc 6 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC7LFOFREQ","Osc 7 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC7LFOFREQ","Osc 7 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC7LFODEPTH","Osc 7 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC8LFOFREQ","Osc 8 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC8LFOFREQ","Osc 8 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC8LFODEPTH","Osc 8 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC9LFOFREQ","Osc 9 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC9LFOFREQ","Osc 9 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC9LFODEPTH","Osc 9 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f,},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10LFOFREQ","Osc 10 LFO Frequency",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10LFOFREQ","Osc 10 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10LFODEPTH","Osc 10 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
     
     //DETUNER
@@ -467,6 +488,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout OscillaTroll02AudioProcessor
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN","Sustain",juce::NormalisableRange<float> {0.1f, 1.0f},1.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE","Release",juce::NormalisableRange<float> {0.1f, 3.0f},0.4f));
     
+    //Master
+        params.push_back (std::make_unique<juce::AudioParameterFloat>("MASTERGAIN", "Master Gain", juce::NormalisableRange<float> { 0.0f, 10.0f, 0.01f, 0.3f }, 1.0f, " "));
+    
+    //Glide
+        params.push_back(std::make_unique<juce::AudioParameterInt>("GLIDE", "Glide",  0, 100000, 10000 ));
 
     return {params.begin(), params.end()};
     

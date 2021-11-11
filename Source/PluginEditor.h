@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "AdsrComponent.h"
 #include "OscComponent.h"
+#include "MasterComponent.h"
 
 
 //==============================================================================
@@ -40,6 +41,7 @@ private:
     OscComponent osc9;
     OscComponent osc10;
     AdsrComponent adsr;
+    MasterComponent master;
     
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillaTroll02AudioProcessorEditor)

@@ -23,6 +23,8 @@ public:
     void setGain(const float levelInDecibels);
     void setPitch(const int pitch);
     void setDetuner(const float detune);
+    void setGlide(const int glide);
+    void gliding();
     float processNextSample (float input);
     
     
@@ -40,6 +42,15 @@ private:
     double sampleRateUse;
     juce::dsp::Gain<float> gain;
     float lastProcessSample;
+    
+    bool isGlide;
+    int glider;
+    int glideLastMidiNote;
+    int glideCounter;
+    bool glideHappening;
+    int fromGlideMidiNote;
+    float helper{220.0f};
+    
     
     
 };

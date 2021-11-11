@@ -47,13 +47,43 @@ void OscData::setWaveType(const int choice)
 
 void OscData::setWaveFrequency(const int midiNoteNumber)
 {
-    setFrequency(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber+lastPitch)+fmMod+detuner);
-    lastMidiNote=midiNoteNumber;
+    if(midiNoteNumber!=lastMidiNote)
+    {
+        if(isGlide){
+            glideCounter=0;
+            if(lastMidiNote!=0){
+                glideHappening=true;
+                fromGlideMidiNote=lastMidiNote;
+            }
+            
+            lastMidiNote=midiNoteNumber;
+        }
+        else{
+            setFrequency(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber+lastPitch)+fmMod+detuner);
+            lastMidiNote=midiNoteNumber;
+        }
+    }
+}
+
+void OscData::gliding()
+{
+    //if(isGlide){
+        if (glideCounter==glider)
+        {
+            glideHappening=false;
+            glideCounter=0;
+        }
+        else
+        {
+            helper=((juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)-juce::MidiMessage::getMidiNoteInHertz(fromGlideMidiNote+lastPitch))/glider)*glideCounter+juce::MidiMessage::getMidiNoteInHertz(fromGlideMidiNote+lastPitch);
+            glideCounter++;
+        }
+
 }
 
 void OscData::getNewAudioBlock(juce::dsp::AudioBlock<float>& block)
 {
-    for (int ch=0; ch<block.getNumChannels(); ch++)
+    /*for (int ch=0; ch<block.getNumChannels(); ch++)
     {
         for(int s=0; s<block.getNumSamples(); s++)
         {
@@ -64,6 +94,7 @@ void OscData::getNewAudioBlock(juce::dsp::AudioBlock<float>& block)
     
     process(juce::dsp::ProcessContextReplacing<float> (block));
     gain.process (juce::dsp::ProcessContextReplacing<float> (block));
+    */
 }
 
 void OscData::setFmParams(const float depth, const float freq)
@@ -72,7 +103,13 @@ void OscData::setFmParams(const float depth, const float freq)
     fmDepth=depth;
     //auto currentFreq=juce::MidiMessage::getMidiNoteInHertz(lastMidiNote)+fmMod;
     //setFrequency(currentFreq>=0 ? currentFreq: currentFreq* -1.0f);
-    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    //setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    if(isGlide){
+        setFrequency(helper+fmMod+detuner);
+    }
+    else{
+        setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    }
 }
 
 void OscData::setLfoParams(const float depth, const float freq)
@@ -90,13 +127,31 @@ void OscData::setGain(const float levelInDecibels)
 void OscData::setPitch(const int pitch)
 {
     lastPitch=pitch;
-    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    //setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    if(isGlide){
+        setFrequency(helper+fmMod+detuner);
+    }
+    else{
+        setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    }
 }
 
 void OscData::setDetuner(const float detune)
 {
     detuner=detune;
-    setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    //setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    if(isGlide){
+        setFrequency(helper+fmMod+detuner);
+    }
+    else{
+        setFrequency(juce::MidiMessage::getMidiNoteInHertz(lastMidiNote+lastPitch)+fmMod+detuner);
+    }
+}
+
+void OscData::setGlide(const int glide)
+{
+    glider=glide;
+    isGlide=(glide!=0);
 }
 
 float OscData::processNextSample (float input)
@@ -105,10 +160,19 @@ float OscData::processNextSample (float input)
     fmMod = fmOsc.processSample (input) * fmDepth;
     if (counter==48)
     {
+       
+        
         lfoMod = lfoOsc.processSample (input) * lfoDepth;
         counter=0;
     }
     counter++;
+   
+    if (glideHappening)
+    {
+        gliding();
+        setFrequency(helper+fmMod+detuner);
+    }
+    
     lastProcessSample=gain.processSample (processSample (input));
     //std::cout<<input<<std::endl;
     //std::cout<<gain.processSample (processSample (input))<<std::endl;

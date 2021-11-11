@@ -30,8 +30,8 @@ class SliderLookAndFeel : public juce::LookAndFeel_V4
 public:
     SliderLookAndFeel()
     {
-        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::royalblue);
-        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::royalblue);
         setColour(juce::Slider::thumbColourId, juce::Colours::navy);
     }
 };

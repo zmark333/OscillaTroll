@@ -112,6 +112,7 @@ void SynthVoice::renderNextBlock (juce::AudioBuffer<float>& outputBuffer, int st
         for (int j = 0; j < synthBuffer.getNumSamples(); ++j)
         {
             buffer[j] = osc1[i].processNextSample (buffer[j]) + osc2[i].processNextSample (buffer[j]) + osc3[i].processNextSample (buffer[j]) + osc4[i].processNextSample (buffer[j]) + osc5[i].processNextSample (buffer[j]) + osc6[i].processNextSample (buffer[j]) + osc7[i].processNextSample (buffer[j]) + osc8[i].processNextSample (buffer[j]) + osc9[i].processNextSample (buffer[j]) + osc10[i].processNextSample (buffer[j]);
+            buffer[j]=buffer[j]*(pow(10, masterVolume/20));
         }
     }
     
