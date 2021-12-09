@@ -130,7 +130,7 @@ void OscComponent::paint (juce::Graphics& g)
     g.setColour (juce::Colours::white);
     g.setFont (font);
     g.setFont (g.getCurrentFont().boldened());
-    g.drawText(componentName, labelSpace.withX(0), juce::Justification::right);
+    g.drawText(componentName, labelSpace.withX(0), juce::Justification::left);
 }
 
 void OscComponent::resized()
@@ -148,7 +148,7 @@ void OscComponent::resized()
     labelYOff=sliderHeight/4;
     sliderPosY=labelHeight*2;
     
-    oscWaveSelector.setBounds(0, 0, sliderWidth*2.5, labelHeight);
+    oscWaveSelector.setBounds(4.5*sliderWidth, 0, sliderWidth*2.5, labelHeight);
     fmFreqSlider.setBounds(0, sliderPosY, sliderWidth, sliderHeight);
     fmFreqLabel.setBounds(fmFreqSlider.getX(), fmFreqSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
     fmDepthSlider.setBounds(fmFreqSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);

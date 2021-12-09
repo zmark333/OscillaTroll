@@ -23,7 +23,7 @@ OscillaTroll02AudioProcessorEditor::OscillaTroll02AudioProcessorEditor (OscillaT
         osc9 (audioProcessor.apvts, "Oscillator 9", "OSC9WAVETYPE", "OSC9FMFREQ", "OSC9FMDEPTH", "OSC9GAIN", "OSC9PITCH", "OSC9LFOFREQ", "OSC9LFODEPTH", "OSC9DETUNE"),
         osc10 (audioProcessor.apvts, "Oscillator 10", "OSC10WAVETYPE", "OSC10FMFREQ", "OSC10FMDEPTH", "OSC10GAIN", "OSC10PITCH", "OSC10LFOFREQ", "OSC10LFODEPTH", "OSC10DETUNE"),
         adsr ("Amp Envelope", audioProcessor.apvts, "ATTACK", "DECAY", "SUSTAIN", "RELEASE"),
-        master ("Master", audioProcessor.apvts, "MASTERGAIN")
+        master ("Master", audioProcessor.apvts, "MASTERGAIN", "MORG")
 {
     setResizable(true, true);
     setSize (900, 500);
@@ -78,8 +78,8 @@ void OscillaTroll02AudioProcessorEditor::resized()
     osc8.setBounds( osc1.getRight()+paddingX, 2*(height+paddingY), width, height);
     osc9.setBounds( osc1.getRight()+paddingX, 3*(height+paddingY), width, height);
     osc10.setBounds( osc1.getRight()+paddingX, 4*(height+paddingY), width, height);
-    adsr.setBounds(osc6.getRight()+paddingX,paddingY,width/2, 2*height-paddingY);
-    master.setBounds(osc6.getRight()+paddingX,2*height,width/2, 2*height-paddingY);
+    adsr.setBounds(osc6.getRight()+paddingX, 0,width/2, 2*height+paddingY);
+    master.setBounds(osc6.getRight()+paddingX,2*height+2*paddingY,width/2, 2*height+paddingY);
     
     
 

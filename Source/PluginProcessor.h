@@ -55,11 +55,22 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
+    void refreshSynthesiser(bool multi);
+    
     juce::AudioProcessorValueTreeState apvts;
 
 private:
     juce::Synthesiser synth;
+    const int numVoices{6};
     juce::AudioProcessorValueTreeState::ParameterLayout createParams();
+    float lastMorG;
+    double asampleRate;
+    int asamplesPerBlock;
+    int counter{1001};
+    
+    juce::AudioPlayHead* playHead;
+    juce::AudioPlayHead::CurrentPositionInfo currentPositionInfo;
+    double bpm;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillaTroll02AudioProcessor)
 };

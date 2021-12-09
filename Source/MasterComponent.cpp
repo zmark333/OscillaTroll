@@ -12,7 +12,7 @@
 #include "JuceHeader.h"
 
 
-MasterComponent::MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId)
+MasterComponent::MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId, juce::String MorGSelectorID)
 {
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     
@@ -20,14 +20,14 @@ MasterComponent::MasterComponent(juce::String name, juce::AudioProcessorValueTre
     
     masterAttachment = std::make_unique<SliderAttachment>(apvts, "MASTERGAIN",masterSlider);
     
-    masterSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    masterSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     masterSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
     masterSlider.setLookAndFeel(&sliderLookAndFeel);
     addAndMakeVisible(masterSlider);
     
     glideAttachment = std::make_unique<SliderAttachment>(apvts, "GLIDE",glideSlider);
     
-    glideSlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    glideSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     glideSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 25);
     glideSlider.setLookAndFeel(&sliderLookAndFeel);
     addAndMakeVisible(glideSlider);
@@ -43,12 +43,20 @@ MasterComponent::MasterComponent(juce::String name, juce::AudioProcessorValueTre
     glideLabel.setFont(font);
     glideLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(glideLabel);
+    
+    juce::StringArray choices {"Multi-touch", "Glider"};
+    MorGBox.addItemList(choices, 1);
+    MorGBox.setLookAndFeel(&comboBoxLookAndFeel);
+    addAndMakeVisible(MorGBox);
+    MorGAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, MorGSelectorID, MorGBox);
+    
 }
 
 MasterComponent::~MasterComponent()
 {
     masterSlider.setLookAndFeel(nullptr);
     glideSlider.setLookAndFeel(nullptr);
+    MorGBox.setLookAndFeel(nullptr);
 }
 
 void MasterComponent::paint (juce::Graphics& g)
@@ -71,10 +79,10 @@ void MasterComponent::resized()
 {
     const auto bounds=getLocalBounds().reduced(10);
     const auto padding=10;
-    const auto sliderWidth=bounds.getWidth()/4-padding;
-    const auto sliderHeight=bounds.getHeight()/1.5;
+    const auto sliderWidth=bounds.getWidth()/2-padding;
+    const auto sliderHeight=bounds.getHeight()/2.5;
     const auto sliderStartX=10;
-    const auto sliderStartY=bounds.getHeight()/4;
+    const auto sliderStartY=bounds.getHeight()/5;
     auto labelHeight=sliderHeight/6;
     auto labelYOff=sliderHeight/8;
     
@@ -84,4 +92,6 @@ void MasterComponent::resized()
     
     masterSlider.setBounds(glideSlider.getRight(), sliderStartY, sliderWidth, sliderHeight);
     masterLabel.setBounds(masterSlider.getX(), masterSlider.getY()-labelYOff, masterSlider.getWidth(), labelHeight);
+    
+    MorGBox.setBounds(sliderStartX, glideSlider.getY()+8*padding, 2*sliderWidth, sliderHeight/3);
 }

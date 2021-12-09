@@ -174,7 +174,6 @@ float OscData::processNextSample (float input)
     }
     
     lastProcessSample=gain.processSample (processSample (input));
-    //std::cout<<input<<std::endl;
-    //std::cout<<gain.processSample (processSample (input))<<std::endl;
+
     return gain.processSample (processSample (input));
 }

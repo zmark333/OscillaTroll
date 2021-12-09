@@ -12,13 +12,24 @@
 
 #include "JuceHeader.h"
 
+class MasterComboBoxLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    MasterComboBoxLookAndFeel()
+    {
+        setColour(juce::ComboBox::backgroundColourId, juce::Colours::steelblue);
+        setColour(juce::ComboBox::arrowColourId, juce::Colours::steelblue);
+    }
+};
+
+
 class MasterSliderLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
     MasterSliderLookAndFeel()
     {
-        setColour(juce::Slider::backgroundColourId, juce::Colours::royalblue);
-        setColour(juce::Slider::trackColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::lightsteelblue);
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::royalblue);
         setColour(juce::Slider::thumbColourId, juce::Colours::navy);
     }
 };
@@ -26,7 +37,7 @@ public:
 class MasterComponent  : public juce::Component
 {
 public:
-    MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId);
+    MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId, juce::String MorGSelectorID);
     ~MasterComponent() override;
     
     void paint (juce::Graphics&) override;
@@ -40,6 +51,9 @@ private:
     juce::Label glideLabel;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> glideAttachment;
     juce::String componentName {""};
+    juce::ComboBox MorGBox;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> MorGAttachment;
     
     MasterSliderLookAndFeel sliderLookAndFeel;
+    MasterComboBoxLookAndFeel comboBoxLookAndFeel;
 };
