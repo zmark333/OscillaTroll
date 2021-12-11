@@ -114,7 +114,7 @@ void OscData::setFmParams(const float depth, const float freq)
 
 void OscData::setLfoParams(const float depth, const float freq)
 {
-    lfoOsc.setFrequency(freq*48);
+    lfoOsc.setFrequency(freq);
     lfoDepth=depth;
 }
 
@@ -156,16 +156,8 @@ void OscData::setGlide(const int glide)
 
 float OscData::processNextSample (float input)
 {
-    //input=0;
     fmMod = fmOsc.processSample (input) * fmDepth;
-    if (counter==48)
-    {
-       
-        
         lfoMod = lfoOsc.processSample (input) * lfoDepth;
-        counter=0;
-    }
-    counter++;
    
     if (glideHappening)
     {

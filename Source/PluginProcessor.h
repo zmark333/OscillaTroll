@@ -67,6 +67,7 @@ private:
     double asampleRate;
     int asamplesPerBlock;
     int counter{1001};
+    float lastHorR;
     
     juce::AudioPlayHead* playHead;
     juce::AudioPlayHead::CurrentPositionInfo currentPositionInfo;

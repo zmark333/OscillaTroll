@@ -28,6 +28,8 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void HorR (bool isHertz);
+    
 private:
     OscillaTroll02AudioProcessor& audioProcessor;
     OscComponent osc1;
@@ -43,6 +45,8 @@ private:
     AdsrComponent adsr;
     MasterComponent master;
     
+    juce::ComboBox HorRBox;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> HorRAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillaTroll02AudioProcessorEditor)
 };

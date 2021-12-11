@@ -58,17 +58,7 @@ private:
     std::array<OscData, 2> osc8;
     std::array<OscData, 2> osc9;
     std::array<OscData, 2> osc10;
-    /*OscData osc1;
-    OscData osc2;
-    OscData osc3;
-    OscData osc4;
-    OscData osc5;
-    OscData osc6;
-    OscData osc7;
-    OscData osc8;
-    OscData osc9;
-    OscData osc10;
-     */
+    
     AdsrData adsr;
     
     juce::dsp::Gain<float> gain;

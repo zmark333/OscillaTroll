@@ -151,13 +151,10 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    counter++;
-    
-   // if(counter>100)
-    {
-        counter=0;
         
         auto& masterVolume=*apvts.getRawParameterValue("MASTERGAIN");
+
+        //MorG
         auto& MorG=*apvts.getRawParameterValue("MORG");
         
         if(MorG!=lastMorG){
@@ -166,20 +163,34 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
             lastMorG=MorG;
         }
         
+        
         auto& glide=*apvts.getRawParameterValue("GLIDE");
         
         if(MorG==0){
             glide=0;
         }
         
+        if(MorG!=lastMorG){
+            refreshSynthesiser(MorG==0);
+            prepareToPlay(asampleRate, asamplesPerBlock);
+            lastMorG=MorG;
+        }
+        
+        //BPM
+        playHead = this->getPlayHead();
+        playHead->getCurrentPosition (currentPositionInfo);
+        bpm=currentPositionInfo.bpm;
+        
+        //HorR
+        auto& HorR=*apvts.getRawParameterValue("HORR");
+        
+        
         auto& attack=*apvts.getRawParameterValue("ATTACK");
         auto& decay=*apvts.getRawParameterValue("DECAY");
         auto& sustain=*apvts.getRawParameterValue("SUSTAIN");
         auto& release=*apvts.getRawParameterValue("RELEASE");
         
-        playHead = this->getPlayHead();
-        playHead->getCurrentPosition (currentPositionInfo);
-        bpm=currentPositionInfo.bpm;
+        
         
         for (int i=0; i<synth.getNumVoices(); i++)
         {
@@ -277,11 +288,34 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                 
                 
                 
+                    auto& lfoFrequ1r=*apvts.getRawParameterValue("OSC1LFOFREQRATE");
+                    auto& lfoFrequ2r=*apvts.getRawParameterValue("OSC2LFOFREQRATE");
+                    auto& lfoFrequ3r=*apvts.getRawParameterValue("OSC3LFOFREQRATE");
+                    auto& lfoFrequ4r=*apvts.getRawParameterValue("OSC4LFOFREQRATE");
+                    auto& lfoFrequ5r=*apvts.getRawParameterValue("OSC5LFOFREQRATE");
+                    auto& lfoFrequ6r=*apvts.getRawParameterValue("OSC6LFOFREQRATE");
+                    auto& lfoFrequ7r=*apvts.getRawParameterValue("OSC7LFOFREQRATE");
+                    auto& lfoFrequ8r=*apvts.getRawParameterValue("OSC8LFOFREQRATE");
+                    auto& lfoFrequ9r=*apvts.getRawParameterValue("OSC9LFOFREQRATE");
+                    auto& lfoFrequ10r=*apvts.getRawParameterValue("OSC10LFOFREQRATE");
+                    
+                    auto lfoFrequ1rv=bpm/60*lfoFrequ1r;
+                    auto lfoFrequ2rv=bpm/60*lfoFrequ2r;
+                    auto lfoFrequ3rv=bpm/60*lfoFrequ3r;
+                    auto lfoFrequ4rv=bpm/60*lfoFrequ4r;
+                    auto lfoFrequ5rv=bpm/60*lfoFrequ5r;
+                    auto lfoFrequ6rv=bpm/60*lfoFrequ6r;
+                    auto lfoFrequ7rv=bpm/60*lfoFrequ7r;
+                    auto lfoFrequ8rv=bpm/60*lfoFrequ8r;
+                    auto lfoFrequ9rv=bpm/60*lfoFrequ9r;
+                    auto lfoFrequ10rv=bpm/60*lfoFrequ10r;
+                
+                
+                
                 for (int i = 0; i < 2; i++)
                 {
                     voice->getOscillator1()[i].setWaveType(oscWaveChoice1);
                     voice->getOscillator1()[i].setFmParams(fmDepth1, fmFrequ1);
-                    voice->getOscillator1()[i].setLfoParams(lfoDepth1, lfoFrequ1);
                     voice->getOscillator1()[i].setGain(levelInDecibels1);
                     voice->getOscillator1()[i].setPitch(oscPitch1);
                     voice->getOscillator1()[i].setDetuner(detune1);
@@ -289,7 +323,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator2()[i].setWaveType(oscWaveChoice2);
                     voice->getOscillator2()[i].setFmParams(fmDepth2, fmFrequ2);
-                    voice->getOscillator2()[i].setLfoParams(lfoDepth2, lfoFrequ2);
                     voice->getOscillator2()[i].setGain(levelInDecibels2);
                     voice->getOscillator2()[i].setPitch(oscPitch2);
                     voice->getOscillator2()[i].setDetuner(detune2);
@@ -297,7 +330,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator3()[i].setWaveType(oscWaveChoice3);
                     voice->getOscillator3()[i].setFmParams(fmDepth3, fmFrequ3);
-                    voice->getOscillator3()[i].setLfoParams(lfoDepth3, lfoFrequ3);
                     voice->getOscillator3()[i].setGain(levelInDecibels3);
                     voice->getOscillator3()[i].setPitch(oscPitch3);
                     voice->getOscillator3()[i].setDetuner(detune3);
@@ -305,7 +337,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator4()[i].setWaveType(oscWaveChoice4);
                     voice->getOscillator4()[i].setFmParams(fmDepth4, fmFrequ4);
-                    voice->getOscillator4()[i].setLfoParams(lfoDepth4, lfoFrequ4);
                     voice->getOscillator4()[i].setGain(levelInDecibels4);
                     voice->getOscillator4()[i].setPitch(oscPitch4);
                     voice->getOscillator4()[i].setDetuner(detune4);
@@ -313,7 +344,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator5()[i].setWaveType(oscWaveChoice5);
                     voice->getOscillator5()[i].setFmParams(fmDepth5, fmFrequ5);
-                    voice->getOscillator5()[i].setLfoParams(lfoDepth5, lfoFrequ5);
                     voice->getOscillator5()[i].setGain(levelInDecibels5);
                     voice->getOscillator5()[i].setPitch(oscPitch5);
                     voice->getOscillator5()[i].setDetuner(detune5);
@@ -321,7 +351,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator6()[i].setWaveType(oscWaveChoice6);
                     voice->getOscillator6()[i].setFmParams(fmDepth6, fmFrequ6);
-                    voice->getOscillator6()[i].setLfoParams(lfoDepth6, lfoFrequ6);
                     voice->getOscillator6()[i].setGain(levelInDecibels6);
                     voice->getOscillator6()[i].setPitch(oscPitch6);
                     voice->getOscillator6()[i].setDetuner(detune6);
@@ -329,7 +358,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator7()[i].setWaveType(oscWaveChoice7);
                     voice->getOscillator7()[i].setFmParams(fmDepth7, fmFrequ7);
-                    voice->getOscillator7()[i].setLfoParams(lfoDepth7, lfoFrequ7);
                     voice->getOscillator7()[i].setGain(levelInDecibels7);
                     voice->getOscillator7()[i].setPitch(oscPitch7);
                     voice->getOscillator7()[i].setDetuner(detune7);
@@ -337,7 +365,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator8()[i].setWaveType(oscWaveChoice8);
                     voice->getOscillator8()[i].setFmParams(fmDepth8, fmFrequ8);
-                    voice->getOscillator8()[i].setLfoParams(lfoDepth8, lfoFrequ8);
                     voice->getOscillator8()[i].setGain(levelInDecibels8);
                     voice->getOscillator8()[i].setPitch(oscPitch8);
                     voice->getOscillator8()[i].setDetuner(detune8);
@@ -345,7 +372,6 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator9()[i].setWaveType(oscWaveChoice9);
                     voice->getOscillator9()[i].setFmParams(fmDepth9, fmFrequ9);
-                    voice->getOscillator9()[i].setLfoParams(lfoDepth9, lfoFrequ9);
                     voice->getOscillator9()[i].setGain(levelInDecibels9);
                     voice->getOscillator9()[i].setPitch(oscPitch9);
                     voice->getOscillator9()[i].setDetuner(detune9);
@@ -353,11 +379,35 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
                     
                     voice->getOscillator10()[i].setWaveType(oscWaveChoice10);
                     voice->getOscillator10()[i].setFmParams(fmDepth10, fmFrequ10);
-                    voice->getOscillator10()[i].setLfoParams(lfoDepth10, lfoFrequ10);
                     voice->getOscillator10()[i].setGain(levelInDecibels10);
                     voice->getOscillator10()[i].setPitch(oscPitch10);
                     voice->getOscillator10()[i].setDetuner(detune10);
                     voice->getOscillator10()[i].setGlide(glide);
+                    
+                    if (HorR==0){
+                        voice->getOscillator1()[i].setLfoParams(lfoDepth1, lfoFrequ1);
+                        voice->getOscillator2()[i].setLfoParams(lfoDepth2, lfoFrequ2);
+                        voice->getOscillator3()[i].setLfoParams(lfoDepth3, lfoFrequ3);
+                        voice->getOscillator4()[i].setLfoParams(lfoDepth4, lfoFrequ4);
+                        voice->getOscillator5()[i].setLfoParams(lfoDepth5, lfoFrequ5);
+                        voice->getOscillator6()[i].setLfoParams(lfoDepth6, lfoFrequ6);
+                        voice->getOscillator7()[i].setLfoParams(lfoDepth7, lfoFrequ7);
+                        voice->getOscillator8()[i].setLfoParams(lfoDepth8, lfoFrequ8);
+                        voice->getOscillator9()[i].setLfoParams(lfoDepth9, lfoFrequ9);
+                        voice->getOscillator10()[i].setLfoParams(lfoDepth10, lfoFrequ10);
+                    }
+                    else {
+                        voice->getOscillator1()[i].setLfoParams(lfoDepth1, lfoFrequ1rv);
+                        voice->getOscillator2()[i].setLfoParams(lfoDepth2, lfoFrequ2rv);
+                        voice->getOscillator3()[i].setLfoParams(lfoDepth3, lfoFrequ3rv);
+                        voice->getOscillator4()[i].setLfoParams(lfoDepth4, lfoFrequ4rv);
+                        voice->getOscillator5()[i].setLfoParams(lfoDepth5, lfoFrequ5rv);
+                        voice->getOscillator6()[i].setLfoParams(lfoDepth6, lfoFrequ6rv);
+                        voice->getOscillator7()[i].setLfoParams(lfoDepth7, lfoFrequ7rv);
+                        voice->getOscillator8()[i].setLfoParams(lfoDepth8, lfoFrequ8rv);
+                        voice->getOscillator9()[i].setLfoParams(lfoDepth9, lfoFrequ9rv);
+                        voice->getOscillator10()[i].setLfoParams(lfoDepth10, lfoFrequ10rv);
+                    }
                 }
                 
                 voice->updateAdsr(attack.load(), decay.load(), sustain.load(), release.load());
@@ -366,7 +416,7 @@ void OscillaTroll02AudioProcessor::processBlock (juce::AudioBuffer<float>& buffe
         }
         
         
-    }
+    
     
     
     synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
@@ -475,37 +525,37 @@ juce::AudioProcessorValueTreeState::ParameterLayout OscillaTroll02AudioProcessor
     
     //LFO Hertz
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1LFOFREQ","Osc 1 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1LFODEPTH","Osc 1 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1LFODEPTH","Osc 1 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC2LFOFREQ","Osc 2 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC2LFODEPTH","Osc 2 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC2LFODEPTH","Osc 2 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC3LFOFREQ","Osc 3 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC3LFODEPTH","Osc 3 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC3LFODEPTH","Osc 3 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC4LFOFREQ","Osc 4 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC4LFODEPTH","Osc 4 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC4LFODEPTH","Osc 4 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC5LFOFREQ","Osc 5 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC5LFODEPTH","Osc 5 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC5LFODEPTH","Osc 5 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC6LFOFREQ","Osc 6 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC6LFODEPTH","Osc 6 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC6LFODEPTH","Osc 6 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC7LFOFREQ","Osc 7 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC7LFODEPTH","Osc 7 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC7LFODEPTH","Osc 7 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC8LFOFREQ","Osc 8 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC8LFODEPTH","Osc 8 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC8LFODEPTH","Osc 8 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC9LFOFREQ","Osc 9 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC9LFODEPTH","Osc 9 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f,},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC9LFODEPTH","Osc 9 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f,},0.0f));
     params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10LFOFREQ","Osc 10 LFO Frequency",juce::NormalisableRange<float> {0.0f, 20.0f, 0.1f},0.0f));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10LFODEPTH","Osc 10 LFO Depth",juce::NormalisableRange<float> {0.0f, 100.0f, 0.01f},0.0f));
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10LFODEPTH","Osc 10 LFO Depth",juce::NormalisableRange<float> {0.0f, 40.0f, 0.01f},0.0f));
     
     //LFO Rate
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC1LFOFREQRATE","Osc 1 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC2LFOFREQRATE","Osc 2 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC3LFOFREQRATE","Osc 3 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC4LFOFREQRATE","Osc 4 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC5LFOFREQRATE","Osc 5 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC6LFOFREQRATE","Osc 6 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC7LFOFREQRATE","Osc 7 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC8LFOFREQRATE","Osc 8 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC9LFOFREQRATE","Osc 9 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("OSC10LFOFREQRATE","Osc 10 LFO Frequency Rate",juce::NormalisableRange<int> {0, 16, 1},0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC1LFOFREQRATE","Osc 1 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC2LFOFREQRATE","Osc 2 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC3LFOFREQRATE","Osc 3 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC4LFOFREQRATE","Osc 4 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC5LFOFREQRATE","Osc 5 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC6LFOFREQRATE","Osc 6 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC7LFOFREQRATE","Osc 7 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC8LFOFREQRATE","Osc 8 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC9LFOFREQRATE","Osc 9 LFO Frequency Rate", 0, 16, 0));
+    params.push_back(std::make_unique<juce::AudioParameterInt>("OSC10LFOFREQRATE","Osc 10 LFO Frequency Rate", 0, 16, 0));
     
     
     
@@ -558,3 +608,4 @@ void OscillaTroll02AudioProcessor::refreshSynthesiser(bool multi)
         synth.addVoice(new SynthVoice());
     }
 }
+

@@ -11,7 +11,7 @@
 #include "OscComponent.h"
 #include <JuceHeader.h>
 
-OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId, juce::String lfoFreqId, juce::String lfoDepthId, juce::String detunerId)
+OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::String name, juce::String waveSelectorID, juce::String fmFreqId, juce::String fmDepthId, juce::String gainId, juce::String pitchId, juce::String lfoFreqId,juce::String lfoFreqRateId, juce::String lfoDepthId, juce::String detunerId, juce::String HorR)
 {
     componentName=name;
     
@@ -28,6 +28,7 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
     oscWaveSelector.setLookAndFeel(&comboBoxLookAndFeel);
     addAndMakeVisible(oscWaveSelector);
     oscWaveSelectorAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, waveSelectorID, oscWaveSelector);
+    
     
     fmFreqSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     fmFreqSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
@@ -58,6 +59,16 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
     lfoFreqLabel.setFont(font);
     lfoFreqLabel.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(lfoFreqLabel);
+    
+    lfoFreqRSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    lfoFreqRSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
+    lfoFreqRSlider.setLookAndFeel(&sliderLookAndFeel);
+    addAndMakeVisible (lfoFreqRSlider);
+    lfoFreqRAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, lfoFreqRateId, lfoFreqRSlider);
+    lfoFreqRateLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
+    lfoFreqRateLabel.setFont(font);
+    lfoFreqRateLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible(lfoFreqRateLabel);
     
     lfoDepthSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     lfoDepthSlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, vmiWeight, vmiHeight);
@@ -102,6 +113,8 @@ OscComponent::OscComponent(juce::AudioProcessorValueTreeState& apvts, juce::Stri
     //setSliderWithLabel(fmFreqSlider, fmFreqLabel, apvts, fmFreqId, fmFreqAttachment);
     //setSliderWithLabel(fmDepthSlider, fmDepthLabel, apvts, fmDepthId, fmDepthAttachment);
     
+    horRValue =apvts.getParameterAsValue("HORR");
+    horRisHertz=(horRValue.toString()=="0.0");
     
 }
 
@@ -111,6 +124,7 @@ OscComponent::~OscComponent()
     fmFreqSlider.setLookAndFeel(nullptr);
     fmDepthSlider.setLookAndFeel(nullptr);
     lfoFreqSlider.setLookAndFeel(nullptr);
+    lfoFreqRSlider.setLookAndFeel(nullptr);
     lfoDepthSlider.setLookAndFeel(nullptr);
     gainSlider.setLookAndFeel(nullptr);
     pitchSlider.setLookAndFeel(nullptr);
@@ -153,17 +167,34 @@ void OscComponent::resized()
     fmFreqLabel.setBounds(fmFreqSlider.getX(), fmFreqSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
     fmDepthSlider.setBounds(fmFreqSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     fmDepthLabel.setBounds(fmDepthSlider.getX(), fmDepthSlider.getY()-labelYOff, fmDepthSlider.getWidth(), labelHeight);
-    lfoFreqSlider.setBounds(fmDepthSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
-    lfoFreqLabel.setBounds(lfoFreqSlider.getX(), lfoFreqSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
-    lfoDepthSlider.setBounds(lfoFreqSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
-    lfoDepthLabel.setBounds(lfoDepthSlider.getX(), lfoDepthSlider.getY()-labelYOff, fmDepthSlider.getWidth(), labelHeight);
+    
+    
+    if (horRisHertz){
+        lfoFreqRSlider.setBounds(fmDepthSlider.getRight(), sliderPosY, 0, 0);
+        lfoFreqRateLabel.setBounds(lfoFreqRSlider.getX(), lfoFreqRSlider.getY()-labelYOff, 0, 0);
+        
+        lfoFreqSlider.setBounds(fmDepthSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+        lfoFreqLabel.setBounds(lfoFreqSlider.getX(), lfoFreqSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
+
+        lfoDepthSlider.setBounds(lfoFreqSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+        lfoDepthLabel.setBounds(lfoDepthSlider.getX(), lfoDepthSlider.getY()-labelYOff, fmDepthSlider.getWidth(), labelHeight);
+    }
+    else{
+        lfoFreqSlider.setBounds(fmDepthSlider.getRight(), sliderPosY, 0, 0);
+        lfoFreqLabel.setBounds(lfoFreqSlider.getX(), lfoFreqSlider.getY()-labelYOff, 0, 0);
+        
+        lfoFreqRSlider.setBounds(fmDepthSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+        lfoFreqRateLabel.setBounds(lfoFreqRSlider.getX(), lfoFreqRSlider.getY()-labelYOff, fmFreqSlider.getWidth(), labelHeight);
+        
+        lfoDepthSlider.setBounds(lfoFreqRSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
+        lfoDepthLabel.setBounds(lfoDepthSlider.getX(), lfoDepthSlider.getY()-labelYOff, fmDepthSlider.getWidth(), labelHeight);
+    }
     gainSlider.setBounds(lfoDepthSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     gainLabel.setBounds(gainSlider.getX(), gainSlider.getY()-labelYOff, gainSlider.getWidth(), labelHeight);
     pitchSlider.setBounds(gainSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     pitchLabel.setBounds(pitchSlider.getX(), pitchSlider.getY()-labelYOff, pitchSlider.getWidth(), labelHeight);
     detunerSlider.setBounds(pitchSlider.getRight(), sliderPosY, sliderWidth, sliderHeight);
     detunerLabel.setBounds(detunerSlider.getX(), detunerSlider.getY()-labelYOff, detunerSlider.getWidth(), labelHeight);
-    
     
     
 }

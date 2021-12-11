@@ -30,7 +30,7 @@ public:
     
 private:
     juce::dsp::Oscillator<float> fmOsc {[](float x) {return std::sin(x); }};
-    juce::dsp::Oscillator<float> lfoOsc {[](float x) {return std::sin(x); }};
+    juce::dsp::Oscillator<float> lfoOsc {[](float x) {return x<0.0f ? -1.0f :1.0f; }};
     int lastPitch { 0 };
     float fmMod {0.0f};
     float fmDepth {0.0f};

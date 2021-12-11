@@ -37,7 +37,7 @@ public:
 class MasterComponent  : public juce::Component
 {
 public:
-    MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId, juce::String MorGSelectorID);
+    MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId, juce::String MorGSelectorID, juce::String HorRSelectorID);
     ~MasterComponent() override;
     
     void paint (juce::Graphics&) override;
@@ -53,6 +53,7 @@ private:
     juce::String componentName {""};
     juce::ComboBox MorGBox;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> MorGAttachment;
+    
     
     MasterSliderLookAndFeel sliderLookAndFeel;
     MasterComboBoxLookAndFeel comboBoxLookAndFeel;

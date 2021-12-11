@@ -12,7 +12,7 @@
 #include "JuceHeader.h"
 
 
-MasterComponent::MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId, juce::String MorGSelectorID)
+MasterComponent::MasterComponent(juce::String name, juce::AudioProcessorValueTreeState& apvts, juce::String masterId, juce::String MorGSelectorID, juce::String HorRSelectorID)
 {
     using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     
@@ -49,6 +49,8 @@ MasterComponent::MasterComponent(juce::String name, juce::AudioProcessorValueTre
     MorGBox.setLookAndFeel(&comboBoxLookAndFeel);
     addAndMakeVisible(MorGBox);
     MorGAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(apvts, MorGSelectorID, MorGBox);
+    
+    
     
 }
 
@@ -94,4 +96,5 @@ void MasterComponent::resized()
     masterLabel.setBounds(masterSlider.getX(), masterSlider.getY()-labelYOff, masterSlider.getWidth(), labelHeight);
     
     MorGBox.setBounds(sliderStartX, glideSlider.getY()+8*padding, 2*sliderWidth, sliderHeight/3);
+    
 }
