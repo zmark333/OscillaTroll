@@ -20,8 +20,8 @@ class ComboBoxLookAndFeel : public juce::LookAndFeel_V4
 public:
     ComboBoxLookAndFeel()
     {
-        setColour(juce::ComboBox::backgroundColourId, juce::Colours::steelblue);
-        setColour(juce::ComboBox::arrowColourId, juce::Colours::steelblue);
+        setColour(juce::ComboBox::backgroundColourId, juce::Colours::transparentWhite);
+        setColour(juce::ComboBox::arrowColourId, juce::Colours::transparentWhite);
     }
 };
 
@@ -30,9 +30,9 @@ class SliderLookAndFeel : public juce::LookAndFeel_V4
 public:
     SliderLookAndFeel()
     {
-        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::lightsteelblue);
-        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::royalblue);
-        setColour(juce::Slider::thumbColourId, juce::Colours::navy);
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::white);
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::transparentWhite);
+        setColour(juce::Slider::thumbColourId, juce::Colours::black);
     }
 };
 
@@ -41,9 +41,9 @@ class OtherSliderLookAndFeel : public juce::LookAndFeel_V4
 public:
     OtherSliderLookAndFeel()
     {
-        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::lightsteelblue);
-        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::lightsteelblue);
-        setColour(juce::Slider::thumbColourId, juce::Colours::navy);
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::white);
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::white);
+        setColour(juce::Slider::thumbColourId, juce::Colours::black);
     }
 };
 

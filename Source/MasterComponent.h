@@ -17,8 +17,8 @@ class MasterComboBoxLookAndFeel : public juce::LookAndFeel_V4
 public:
     MasterComboBoxLookAndFeel()
     {
-        setColour(juce::ComboBox::backgroundColourId, juce::Colours::steelblue);
-        setColour(juce::ComboBox::arrowColourId, juce::Colours::steelblue);
+        setColour(juce::ComboBox::backgroundColourId, juce::Colours::transparentWhite);
+        setColour(juce::ComboBox::arrowColourId, juce::Colours::transparentWhite);
     }
 };
 
@@ -28,9 +28,9 @@ class MasterSliderLookAndFeel : public juce::LookAndFeel_V4
 public:
     MasterSliderLookAndFeel()
     {
-        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::lightsteelblue);
-        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::royalblue);
-        setColour(juce::Slider::thumbColourId, juce::Colours::navy);
+        setColour(juce::Slider::rotarySliderFillColourId, juce::Colours::white);
+        setColour(juce::Slider::rotarySliderOutlineColourId, juce::Colours::transparentWhite);
+        setColour(juce::Slider::thumbColourId, juce::Colours::black);
     }
 };
 
@@ -45,10 +45,10 @@ public:
     
 private:
     juce::Slider masterSlider;
-    juce::Label masterLabel;
+    juce::Label masterLabel {"Master", "Master"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> masterAttachment;
     juce::Slider glideSlider;
-    juce::Label glideLabel;
+    juce::Label glideLabel {"Glider", "Glider"};
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> glideAttachment;
     juce::String componentName {""};
     juce::ComboBox MorGBox;

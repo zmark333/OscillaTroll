@@ -66,9 +66,7 @@ void AdsrComponent::paint (juce::Graphics& g)
     auto labelSpace=bounds.removeFromTop(25.0f);
     float font=bounds.getHeight()/10;
     
-    g.fillAll(juce::Colours::steelblue);
-    g.setColour(juce::Colours::white);
-    g.drawRoundedRectangle(bounds.toFloat(), 5.0f, 2.0f);
+
     
     g.setColour (juce::Colours::white);
     g.setFont (font);

@@ -50,7 +50,7 @@ private:
     bool glideHappening;
     int fromGlideMidiNote;
     float helper{220.0f};
-    
-    
+ 
+    juce::dsp::StateVariableTPTFilter<float> filter;
     
 };

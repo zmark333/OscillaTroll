@@ -18,6 +18,18 @@
 //==============================================================================
 /**
 */
+
+class EditorComboBoxLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    EditorComboBoxLookAndFeel()
+    {
+        setColour(juce::ComboBox::backgroundColourId, juce::Colours::transparentWhite);
+        setColour(juce::ComboBox::arrowColourId, juce::Colours::transparentWhite);
+    }
+};
+
+
 class OscillaTroll02AudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
@@ -45,8 +57,13 @@ private:
     AdsrComponent adsr;
     MasterComponent master;
     
+    juce::ImageComponent mImageComponent;
+    juce::ImageComponent mImageComponent2;
+    
     juce::ComboBox HorRBox;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> HorRAttachment;
 
+    EditorComboBoxLookAndFeel lookAndFeel;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillaTroll02AudioProcessorEditor)
 };

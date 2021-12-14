@@ -21,9 +21,9 @@ class ADSRSliderLookAndFeel : public juce::LookAndFeel_V4
 public:
     ADSRSliderLookAndFeel()
     {
-        setColour(juce::Slider::backgroundColourId, juce::Colours::royalblue);
-        setColour(juce::Slider::trackColourId, juce::Colours::lightsteelblue);
-        setColour(juce::Slider::thumbColourId, juce::Colours::navy);
+        setColour(juce::Slider::backgroundColourId, juce::Colours::white);
+        setColour(juce::Slider::trackColourId, juce::Colours::transparentWhite);
+        setColour(juce::Slider::thumbColourId, juce::Colours::black);
     }
 };
 

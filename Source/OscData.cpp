@@ -16,6 +16,8 @@ void OscData:: prepareToPlay(juce::dsp::ProcessSpec& spec)
     lfoOsc.prepare(spec);
     prepare(spec);
     gain.prepare(spec);
+    filter.prepare(spec);
+    filter.setType(juce::dsp::StateVariableTPTFilterType::bandpass);
     sampleRateUse=spec.sampleRate;
     
 }

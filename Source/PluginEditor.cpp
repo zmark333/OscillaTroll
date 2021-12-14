@@ -29,6 +29,26 @@ OscillaTroll02AudioProcessorEditor::OscillaTroll02AudioProcessorEditor (OscillaT
     setSize (900, 500);
     setResizeLimits(600, 450, 1400, 1200);
 
+    auto tapImage=juce::ImageCache::getFromFile(juce::File("/Users/zomborimark/Documents/Juce_Projects/OscillaTroll02/Source/IMG_0782.jpg"));
+    
+    if(!tapImage.isNull()){
+        mImageComponent.setImage(tapImage, juce::RectanglePlacement::stretchToFit);
+    }
+    else
+        jassert(!tapImage.isNull());
+    
+    auto tapImage2=juce::ImageCache::getFromFile(juce::File("/Users/zomborimark/Documents/Juce_Projects/OscillaTroll02/Source/OscillaTroll.jpg"));
+    
+    if(!tapImage2.isNull()){
+        mImageComponent2.setImage(tapImage2, juce::RectanglePlacement::stretchToFit);
+    }
+    else
+        jassert(!tapImage.isNull());
+    
+    addAndMakeVisible(mImageComponent);
+    //addAndMakeVisible(mImageComponent2);
+    
+    
     addAndMakeVisible(osc1);
     addAndMakeVisible(osc2);
     addAndMakeVisible(osc3);
@@ -44,7 +64,7 @@ OscillaTroll02AudioProcessorEditor::OscillaTroll02AudioProcessorEditor (OscillaT
     
     juce::StringArray choices2 {"Hertz", "Rate"};
     HorRBox.addItemList(choices2, 1);
-    //HorRBox.setLookAndFeel(&comboBoxLookAndFeel);
+    HorRBox.setLookAndFeel(&lookAndFeel);
     addAndMakeVisible(HorRBox);
     HorRAttachment=std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "HORR", HorRBox);
     HorRBox.onChange=[&](){
@@ -73,6 +93,7 @@ OscillaTroll02AudioProcessorEditor::OscillaTroll02AudioProcessorEditor (OscillaT
 
 OscillaTroll02AudioProcessorEditor::~OscillaTroll02AudioProcessorEditor()
 {
+    HorRBox.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -95,6 +116,7 @@ void OscillaTroll02AudioProcessorEditor::resized()
     width=(bounds.getWidth()-4*paddingX)/2.5;
     height=(bounds.getHeight()-5*paddingY)/5;
     
+    mImageComponent.setBoundsRelative(0.0f, 0.0f, 1.0f, 1.0f);
     
     osc1.setBounds(paddingX, 0, width, height);
     osc2.setBounds( paddingX, height+paddingY, width, height);
@@ -108,6 +130,9 @@ void OscillaTroll02AudioProcessorEditor::resized()
     osc10.setBounds( osc1.getRight()+paddingX, 4*(height+paddingY), width, height);
     adsr.setBounds(osc6.getRight()+paddingX, 0,width/2, 2*height+paddingY);
     master.setBounds(osc6.getRight()+paddingX,2*height+2*paddingY,width/2, 2*height+paddingY);
-    HorRBox.setBounds(osc6.getRight()+paddingX, 4*height+3*paddingY, width/4, height/6);
+    HorRBox.setBounds(osc6.getRight()+3*paddingX, 3.5*height+3*paddingY, width/2.5-paddingX, height/4);
+    mImageComponent2.setBounds(osc6.getRight()+paddingX, 4*height, width/2, 1.4*height);
+    
+    
 }
     
