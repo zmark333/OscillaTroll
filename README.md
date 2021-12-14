@@ -13,6 +13,7 @@ The program has 10 oscillators and in every oscillator, the user can change the 
 After the downloading, you have to run the code and after a restart, your DAW's plugin manager hopefully will find it. 
 
 This project uses Juce open-source cross-platform (juce.com).
+Design: My’Art Emission
 
 
 ![Képernyőfotó 2021-12-14 - 11 08 18](https://user-images.githubusercontent.com/69004640/145977961-a89bfc26-83a5-41fa-8d8f-b2ba974c30d4.png)
