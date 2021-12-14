@@ -16,6 +16,6 @@ This project uses Juce open-source cross-platform (juce.com).
 Design: My’Art Emission
 
 
-![Képernyőfotó 2021-12-14 - 11 08 18](https://user-images.githubusercontent.com/69004640/145977961-a89bfc26-83a5-41fa-8d8f-b2ba974c30d4.png)
 
+![Képernyőfotó 2021-12-14 - 22 03 11](https://user-images.githubusercontent.com/69004640/146079851-06001572-ad5b-4c10-af2d-99388ab12488.png)
 
